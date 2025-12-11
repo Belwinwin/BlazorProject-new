@@ -14,17 +14,17 @@ namespace BlazorProject.Repository
 
         public async Task<Employee> CreateAsync(Employee obj)
         {
-            await _db.Employee.AddAsync(obj);
+            await _db.Employees.AddAsync(obj);
             await _db.SaveChangesAsync();
             return obj;
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var obj=await _db.Employee.FirstOrDefaultAsync(u =>u.Id==id);
+            var obj=await _db.Employees.FirstOrDefaultAsync(u =>u.Id==id);
             if (obj != null)
             {
-                _db.Employee.Remove(obj);
+                _db.Employees.Remove(obj);
                 return (await _db.SaveChangesAsync()) >0;
             }
             return false;
@@ -32,7 +32,7 @@ namespace BlazorProject.Repository
 
         public async Task<Employee> GetAsync(int id)
         {
-            var obj=await  _db.Employee.FirstOrDefaultAsync(u =>u.Id==id);
+            var obj=await  _db.Employees.FirstOrDefaultAsync(u =>u.Id==id);
             if (obj == null)
             {
                 return new Employee();
@@ -40,15 +40,15 @@ namespace BlazorProject.Repository
             return obj;
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync() => await _db.Employee.ToListAsync();
+        public async Task<IEnumerable<Employee>> GetAllAsync() => await _db.Employees.ToListAsync();
 
         public async Task<Employee> UpdateAsync(Employee obj)
         {
-            var objFromDb= await _db.Employee.FirstOrDefaultAsync(u =>u.Id==obj.Id);
+            var objFromDb= await _db.Employees.FirstOrDefaultAsync(u =>u.Id==obj.Id);
             if (objFromDb != null)
             {
                 objFromDb.Name = obj.Name;
-                _db.Employee.Update(objFromDb);
+                _db.Employees.Update(objFromDb);
                 await _db.SaveChangesAsync();
                 return objFromDb;
             }

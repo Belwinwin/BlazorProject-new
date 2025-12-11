@@ -3,6 +3,7 @@ using BlazorProject.Components.Account;
 using BlazorProject.Data;
 using BlazorProject.Repository;
 using BlazorProject.Repository.iRepository;
+using BlazorProject.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddSingleton<DatabaseConnectionService>();
 builder.Services.AddScoped<iEmployeeRepository, OracleEmployeeRepository>();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
@@ -60,13 +62,7 @@ var oracleConnectionString = builder.Configuration.GetConnectionString("OracleCo
 builder.Services.AddDbContext<OracleDbContext>(options =>
     options.UseOracle(oracleConnectionString));
 
-// Add MySQL DbContext
-var mysqlConnectionString = builder.Configuration.GetConnectionString("MySqlConnection");
-if (!string.IsNullOrEmpty(mysqlConnectionString))
-{
-    builder.Services.AddDbContext<MySqlDbContext>(options =>
-        options.UseMySql(mysqlConnectionString, ServerVersion.AutoDetect(mysqlConnectionString)));
-}
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
