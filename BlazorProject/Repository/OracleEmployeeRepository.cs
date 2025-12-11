@@ -1,5 +1,6 @@
 ﻿using BlazorProject.Data;
 using BlazorProject.Repository.iRepository;
+using BlazorProject.Services;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
@@ -11,19 +12,18 @@ namespace BlazorProject.Repository
 {
     public class OracleEmployeeRepository : iEmployeeRepository, IOracleEmployeeRepository
     {
-        private readonly string _connStr;
+        private readonly DatabaseConnectionService _dbConnectionService;
 
-        public OracleEmployeeRepository(IConfiguration config)
+        public OracleEmployeeRepository(DatabaseConnectionService dbConnectionService)
         {
-            _connStr = config.GetConnectionString("OracleConnection")
-                       ?? throw new InvalidOperationException("OracleConnection not found");
+            _dbConnectionService = dbConnectionService;
         }
 
-        private OracleConnection CreateConnection() => new OracleConnection(_connStr);
+        private OracleConnection CreateConnection() => new OracleConnection(_dbConnectionService.GetConnectionString());
 
         public async Task<IEnumerable<Employee>> GetAllAsync()
         {
-            const string sql = "SELECT ID, NAME, EMAIL, ROLE, PHONENUMBER FROM EMPLOYEES";
+            const string sql = "SELECT ID, NAME, EMAIL, ROLE, PHONENUMBER FROM EMPLOYEEDETAILS";
             await using var conn = CreateConnection();
             await conn.OpenAsync();
             var rows = await conn.QueryAsync<Employee>(sql);
@@ -32,7 +32,7 @@ namespace BlazorProject.Repository
 
         public async Task<Employee?> GetByIdAsync(int id)
         {
-            const string sql = "SELECT ID, NAME, EMAIL, ROLE, PHONENUMBER FROM EMPLOYEES WHERE ID = :Id";
+            const string sql = "SELECT ID, NAME, EMAIL, ROLE, PHONENUMBER FROM EMPLOYEEDETAILS WHERE ID = :Id";
             await using var conn = CreateConnection();
             await conn.OpenAsync();
             return await conn.QuerySingleOrDefaultAsync<Employee>(sql, new { Id = id });
@@ -40,7 +40,7 @@ namespace BlazorProject.Repository
 
         public async Task<int> AddAsync(Employee employee)
         {
-            const string sql = "INSERT INTO EMPLOYEES (NAME, EMAIL, ROLE, PHONENUMBER) VALUES (:Name, :email, :role, :PhoneNumber)";
+            const string sql = "INSERT INTO EMPLOYEEDETAILS (NAME, EMAIL, ROLE, PHONENUMBER) VALUES (:Name, :Email, :Role, :PhoneNumber)";
             await using var conn = CreateConnection();
             await conn.OpenAsync();
             return await conn.ExecuteAsync(sql, employee);
@@ -48,7 +48,7 @@ namespace BlazorProject.Repository
 
         public async Task<int> UpdateAsync(Employee employee)
         {
-            const string sql = "UPDATE EMPLOYEES SET NAME = :Name, EMAIL = :email, ROLE = :role, PHONENUMBER = :PhoneNumber WHERE ID = :Id";
+            const string sql = "UPDATE EMPLOYEEDETAILS SET NAME = :Name, EMAIL = :Email, ROLE = :Role, PHONENUMBER = :PhoneNumber WHERE ID = :Id";
             await using var conn = CreateConnection();
             await conn.OpenAsync();
             return await conn.ExecuteAsync(sql, employee);
@@ -56,7 +56,7 @@ namespace BlazorProject.Repository
 
         public async Task<int> DeleteAsync(int id)
         {
-            const string sql = "DELETE FROM EMPLOYEES WHERE ID = :Id";
+            const string sql = "DELETE FROM EMPLOYEEDETAILS WHERE ID = :Id";
             await using var conn = CreateConnection();
             await conn.OpenAsync();
             return await conn.ExecuteAsync(sql, new { Id = id });

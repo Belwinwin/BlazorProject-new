@@ -115,7 +115,7 @@ namespace BlazorProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EMPLOYEES", (string)null);
+                    b.ToTable("EMPLOYEEDETAILS", (string)null);
 
                     b.HasData(
                         new

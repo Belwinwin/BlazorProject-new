@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazorProject.Data
 {
-    [Table("EMPLOYEES")]
+    [Table("EMPLOYEEDETAILS")]
     public class Employee
     {
         [Column("ID")]

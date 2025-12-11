@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <Compile Remove="Components\Routes.razor.wVP6E6MgbCYVaE53.ide.g.cs" />
+    <Compile Remove="Migrations\20251211112116_addEmployeeTable.cs" />
+    <Compile Remove="Migrations\20251211112116_addEmployeeTable.Designer.cs" />
     <Compile Remove="Migrations\OracleDb\20251210062319_InitialOracleCreate.cs" />
     <Compile Remove="Migrations\OracleDb\20251210062319_InitialOracleCreate.Designer.cs" />
     <Compile Remove="Migrations\OracleDb\20251210063924_CreateAllTablesOracle.cs" />

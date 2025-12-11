@@ -23,11 +23,14 @@
             <button class="btn btn-secondary" @onclick="SelectOptionB">
                 Option B - Database 2 (hr)
             </button>
+
         </div>
         
         <button class="btn btn-info mt-2" @onclick="TestConnection">
             Test Current Connection
         </button>
+
+        <a href=""> Back to list</a>
     </div>
 </div>
 
@@ -54,7 +57,7 @@
         if (DbConnectionService.SelectedConnection != connectionName)
         {
             DbConnectionService.SetConnection(connectionName);
-            await JSRuntime.InvokeVoidAsync("location.reload");
+            await JSRuntime.InvokeVoidAsync("window.location.href", "/employee");
         }
     }
 
@@ -66,7 +69,19 @@
             await conn.OpenAsync();
             using var cmd = new Oracle.ManagedDataAccess.Client.OracleCommand("SELECT SYSDATE FROM DUAL", conn);
             var result = await cmd.ExecuteScalarAsync();
-            connectionStatus = (true, $"✅ Connected successfully - Server Time: {result}");
+            
+            // Check all objects with EMPLOYEEDETAILS in name
+            using var objCmd = new Oracle.ManagedDataAccess.Client.OracleCommand("SELECT OBJECT_NAME, OBJECT_TYPE FROM USER_OBJECTS WHERE OBJECT_NAME LIKE '%EMPLOYEE%'", conn);
+            using var reader = await objCmd.ExecuteReaderAsync();
+            var objects = new List<string>();
+            while (await reader.ReadAsync())
+            {
+                objects.Add($"{reader.GetString(0)}({reader.GetString(1)})");
+            }
+            reader.Close();
+            
+            var objectInfo = objects.Count > 0 ? string.Join(", ", objects) : "NONE";
+            connectionStatus = (true, $"✅ Connected - Server Time: {result} | Employee objects: {objectInfo}");
             conn.Close();
         }
         catch (Exception ex)

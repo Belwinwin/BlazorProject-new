@@ -5,22 +5,22 @@
 namespace BlazorProject.Migrations
 {
     /// <inheritdoc />
-    public partial class updateTableName : Migration
+    public partial class @new : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Employees",
-                table: "Employees");
+                name: "PK_EMPLOYEE_DETAILS",
+                table: "EMPLOYEE_DETAILS");
 
             migrationBuilder.RenameTable(
-                name: "Employees",
-                newName: "EMPLOYEES");
+                name: "EMPLOYEE_DETAILS",
+                newName: "EMPLOYEEDETAILS");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_EMPLOYEES",
-                table: "EMPLOYEES",
+                name: "PK_EMPLOYEEDETAILS",
+                table: "EMPLOYEEDETAILS",
                 column: "ID");
         }
 
@@ -28,16 +28,16 @@ namespace BlazorProject.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
-                name: "PK_EMPLOYEES",
-                table: "EMPLOYEES");
+                name: "PK_EMPLOYEEDETAILS",
+                table: "EMPLOYEEDETAILS");
 
             migrationBuilder.RenameTable(
-                name: "EMPLOYEES",
-                newName: "Employees");
+                name: "EMPLOYEEDETAILS",
+                newName: "EMPLOYEE_DETAILS");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_Employees",
-                table: "Employees",
+                name: "PK_EMPLOYEE_DETAILS",
+                table: "EMPLOYEE_DETAILS",
                 column: "ID");
         }
     }

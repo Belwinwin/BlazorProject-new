@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace BlazorProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251211090756_updateTableName")]
-    partial class updateTableName
+    [Migration("20251211123214_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,7 +118,7 @@ namespace BlazorProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EMPLOYEES", (string)null);
+                    b.ToTable("EMPLOYEE_DETAILS", (string)null);
 
                     b.HasData(
                         new

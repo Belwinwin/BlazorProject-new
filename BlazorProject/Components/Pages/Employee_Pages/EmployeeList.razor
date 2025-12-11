@@ -1,3 +1,4 @@
+@page "/"
 @page "/employee"
 @inject iEmployeeRepository _EmployeeRepository
 
@@ -14,17 +15,21 @@ else
         <div class="card-header text-white text-center py-3" style="background: linear-gradient(90deg, blue, #1e3c72);">
             <div class="row">
         <div class="col-12 position-relative">
-            <NavLink href="" class="btn btn-lg position-absolute end-0 top-50 translate-middle-y me-3">
-                              <i class="bi bi-box-arrow-right"></i> Logout
+            <NavLink href="database-selector" class="btn btn-lg position-absolute end-0 top-50 translate-middle-y ms-5">
+                              <i class="bi bi-database"></i> Database
             </NavLink>
-            <h2 class="fw-bold mb-0">Employee List</h2>
         </div>
+
+            <h2 class="fw-bold mb-0">Employee List</h2>
     </div>
     </div>
         <div class="card-body p-4 bg-success-subtle">
             <div class="row pb-3">
-                <div class="col-12" text-end>
-                    <a href="employee/create" class="btn btn btn-success float-end"><i class="bi bi-plus"></i>Add New Employee</a>
+                <div class="col-6">
+                    <DatabaseSelectorMini />
+                </div>
+                <div class="col-6 text-end">
+                    <a href="employee/create" class="btn btn btn-success"><i class="bi bi-plus"></i>Add New Employee</a>
                 </div>
             </div>
             @if (Employees.Any())

@@ -88,7 +88,7 @@ else
 
 app.UseHttpsRedirection();
 
-
+app.UseAuthentication();
 app.UseAntiforgery();
 
 app.MapStaticAssets();

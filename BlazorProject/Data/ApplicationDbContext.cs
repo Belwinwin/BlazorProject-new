@@ -11,7 +11,7 @@ namespace BlazorProject.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Employee>().ToTable("EMPLOYEES").HasData(
+            builder.Entity<Employee>().ToTable("EMPLOYEEDETAILS").HasData(
                 new Employee { Id = 1, Name = "John Smith" },
                 new Employee { Id = 2, Name = "Sarah Johnson" },
                 new Employee { Id = 3, Name = "Michael Brown" }
