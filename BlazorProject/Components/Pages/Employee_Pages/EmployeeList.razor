@@ -14,11 +14,6 @@ else
 
         <div class="card-header text-white text-center py-3" style="background: linear-gradient(90deg, blue, #1e3c72);">
             <div class="row">
-        <div class="col-12 position-relative">
-            <NavLink href="database-selector" class="btn btn-lg position-absolute end-0 top-50 translate-middle-y ms-5">
-                              <i class="bi bi-database"></i> Database
-            </NavLink>
-        </div>
 
             <h2 class="fw-bold mb-0">Employee List</h2>
     </div>
@@ -69,14 +64,10 @@ else
     private IEnumerable<Employee> Employees { get; set; } = new List<Employee>();
 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            await LoadEmployees();
-            ISProcessing = false;
-            StateHasChanged();
-        }
+        await LoadEmployees();
+        ISProcessing = false;
     }
 
     private async Task LoadEmployees()
